@@ -1,6 +1,4 @@
-import { useState, useRef } from 'react'
-import { ref, push, set } from 'firebase/database'
-import { db } from '../firebase'
+import { useState } from 'react'
 
 const ChatInput = ({ user, chatId, agentStatus, onSendMessage }) => {
   const [message, setMessage] = useState('')
@@ -15,24 +13,10 @@ const ChatInput = ({ user, chatId, agentStatus, onSendMessage }) => {
     const messageToSend = message.trim()
 
     try {
-      // حفظ في قاعدة البيانات
-      const messagesRef = ref(db, `chats/${chatId}/messages`)
-      const newMessageRef = push(messagesRef)
-
-      const messageData = {
-        id: newMessageRef.key,
-        content: messageToSend,
-        senderId: user.uid,
-        senderName: user.displayName || user.email,
-        createdAt: Date.now(),
-        type: 'text',
-      }
-
-      await set(newMessageRef, messageData)
-
-      // إرسال للـ Agent
-      if (agentStatus === 'ready' && typeof onSendMessage === 'function') {
-        onSendMessage(messageToSend)
+      // ✅ تمرير الرسالة فقط دون حفظ محلي
+      // ✅ سيقوم ChatPage.js بحفظها
+      if (typeof onSendMessage === 'function') {
+        await onSendMessage(messageToSend)
       }
 
       setMessage('')

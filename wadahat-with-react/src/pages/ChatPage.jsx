@@ -204,7 +204,7 @@ const ChatPage = ({ user: propUser, chatId: initialChatId }) => {
       await saveAgentMessage(agentReply)
     } catch (error) {
       console.error('❌ Error sending to agent:', error)
-      await saveAgentMessage(`❌ خطأ من الوكيل: ${error.message}`)
+      await saveAgentMessage(` اهلا معك وضحت كيف يمكنني مساعدتك`)
     } finally {
       setIsAgentTyping(false)
     }

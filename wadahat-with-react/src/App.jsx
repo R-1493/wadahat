@@ -23,9 +23,21 @@ export default function App() {
   const handleLogin = async () => {
     try {
       setError('')
+      // محاولة تسجيل الدخول أولًا
       await loginWithEmail(email, password)
     } catch (err) {
-      setError(err.message)
+      // إذا فشل بسبب عدم وجود المستخدم، نسوي تسجيل جديد تلقائي
+      if (err.code === 'auth/user-not-found') {
+        try {
+          await signUpWithEmail(email, password)
+          // بعد التسجيل، نسوي تسجيل دخول تلقائي
+          await loginWithEmail(email, password)
+        } catch (signupErr) {
+          setError(signupErr.message)
+        }
+      } else {
+        setError(err.message)
+      }
     }
   }
 
