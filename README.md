@@ -1,6 +1,5 @@
 ## 🎥 Demo
 
-شوف الديمو من هنا:
 
 👉 https://www.canva.com/design/DAG6S6iIiik/Wa8r95qdPmn-ekiEWPUfRA/watch
 
